@@ -402,18 +402,32 @@ global_model_status.update_thumbnail = function () {
 };
 ```
 
-#### D. Material Change with Real-time Preview
+#### D. Material Change with Group Visibility
+
+The leg selection demonstrates advanced usage by combining group visibility control with material changes:
 
 ```html
 <!-- Control Panel -->
 <input
-  onclick="global_model_status.leg = this.value; v3.main.changeMaterial('LEGS',this.value);"
+  onclick="global_model_status.leg = this.value;
+           v3.main.groupVisibility('METALLEGS','WOODLEGS');
+           v3.main.changeMaterial('METALLEGS',this.value);"
   value="CHROME"
 />
 <input
-  onclick="global_model_status.leg = this.value; v3.main.changeMaterial('LEGS',this.value);"
+  onclick="global_model_status.leg = this.value;
+           v3.main.groupVisibility('WOODLEGS','METALLEGS');
+           v3.main.changeMaterial('WOODLEGS',this.value);"
   value="WOODEN"
 />
+```
+
+This pattern:
+1. Updates the application state
+2. Shows the appropriate leg group (metal or wood) while hiding the other
+3. Applies the material to the visible group
+
+#### E. Material Preview with Real-time Preview
 
 <!-- Popup with Preview -->
 <div id="colorpopup" style="display: none;">
@@ -438,7 +452,7 @@ global_model_status.update_thumbnail = function () {
 </div>
 ```
 
-#### E. v3-image Component
+#### F. v3-image Component
 
 The `<v3-image>` component creates a linked view of the main viewer:
 
@@ -549,6 +563,40 @@ v3.main.switchToMain();
 
 ---
 
+#### `v3.[name].groupVisibility(showGroup, hideGroup)`
+
+Controls the visibility of model groups/parts. This is useful when you need to show different physical components based on user selection (e.g., metal legs vs wooden legs).
+
+**Parameters:**
+
+- `showGroup` (string): Name of the group to make visible
+- `hideGroup` (string): Name of the group to hide
+
+**Example:**
+
+```javascript
+// Show metal legs and hide wooden legs
+v3.main.groupVisibility("METALLEGS", "WOODLEGS");
+
+// Show wooden legs and hide metal legs
+v3.main.groupVisibility("WOODLEGS", "METALLEGS");
+```
+
+**Common Usage Pattern:**
+Often combined with `changeMaterial()` to both switch visible parts and apply materials:
+
+```javascript
+// Switch to metal legs with chrome finish
+v3.main.groupVisibility("METALLEGS", "WOODLEGS");
+v3.main.changeMaterial("METALLEGS", "CHROME");
+
+// Switch to wooden legs with wooden finish
+v3.main.groupVisibility("WOODLEGS", "METALLEGS");
+v3.main.changeMaterial("WOODLEGS", "WOODEN");
+```
+
+---
+
 ## Material Change System Explained
 
 The material change system works by assigning material codes to material slots on the 3D model.
@@ -558,10 +606,14 @@ The material change system works by assigning material codes to material slots o
 Each 3D model has predefined material slots that can be customized:
 
 - `UPHOLSTERY`: Fabric covering
-- `LEGS`: Leg material/finish
+- `LEGS`: Leg material/finish (generic slot)
+- `METALLEGS`: Metal leg components (when using group visibility)
+- `WOODLEGS`: Wooden leg components (when using group visibility)
 - `BEDDING`: Bedding material
 - `HEADBOARDBACK`: Headboard back panel
 - `PLASTICPARTS`: Plastic components
+
+**Note:** Some models use separate groups for different physical parts (e.g., `METALLEGS` vs `WOODLEGS`). Use the `groupVisibility()` method to show/hide these groups.
 
 ### Material Codes
 
