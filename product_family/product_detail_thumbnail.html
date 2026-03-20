@@ -100,6 +100,17 @@
             height: 100% !important;
         }
 
+        .t-00 {
+            top: 100% !important;
+        }
+
+        .l-00 {
+            left: 100% !important;
+        }
+          .fixed {
+            position: fixed;
+        }
+
         .relative {
             position: relative;
         }
@@ -107,6 +118,8 @@
         .absolute {
             position: absolute;
         }
+
+      
 
         body,
         html {
@@ -125,12 +138,12 @@
             <div class="w-middle  light   ">
                 <div class="w-full">
                     <v3-viewer id="v3id" setting="{
-                model:'Didsbury Bed_No_Storage', 
+                model:'Didsbury Bed No Storage', 
                 background:'#fcfcfc',  
                  materials:{ 
                     UPHOLSTERY :{code:'SILVER GREY' } ,
                     BEDDING:{ code :'BASEBEDDING'} ,
-                    LEGS:{ code : 'BASELEGS'}  ,
+                    LEGS:{ code : 'CHROME'}  ,
                     HEADBOARDBACK : { code:'BASE'} ,
                     PLASTICPARTS : { code:'BASE'} },
                 pan:1000,
@@ -146,7 +159,7 @@
                             var el = document.createElement('img');
                             el.className = 'thumbnail';
                             el.src = "https://vphoto.img.haze.tools/simba_" + data.model +
-                                "_" + data.type +
+                                " " + data.type +
                                 "?zoom=" + data.zoom + "&output_size=" + size +
                                 "&size=1024x1024&background=fcfcfc&pan=0.x0.0x0.0" +
                                 "&angle_x=" + data.rotate_x + "&angle_y=" + data.rotate_y + "&distance=2.5" +
@@ -155,9 +168,9 @@
                             par.appendChild(el);
                         }
 
-                        add_image('300x250', { model: 'Didsbury Bed', type: 'No_Storage', color: 'SILVER GREY', leg: 'BASELEGS', rotate_x: 50, rotate_y: 80, zoom: 1 });
-                        add_image('250x250', { model: 'Didsbury Bed', type: 'No_Storage', color: 'SILVER GREY', leg: 'BASELEGS', rotate_x: 0, rotate_y: 70, zoom: 1 });
-                        add_image('350x250', { model: 'Didsbury Bed', type: 'No_Storage', color: 'SILVER GREY', leg: 'BASELEGS', rotate_x: 90, rotate_y: 85, zoom: 1 });
+                        add_image('300x250', { model: 'Didsbury Bed', type: 'No Storage', color: 'SILVER GREY', leg: 'CHROME', rotate_x: 50, rotate_y: 80, zoom: 1 });
+                        add_image('250x250', { model: 'Didsbury Bed', type: 'No Storage', color: 'SILVER GREY', leg: 'CHROME', rotate_x: 0, rotate_y: 70, zoom: 1 });
+                        add_image('350x250', { model: 'Didsbury Bed', type: 'No Storage', color: 'SILVER GREY', leg: 'CHROME', rotate_x: 90, rotate_y: 85, zoom: 1 });
 
                         document.currentScript.remove();
 
@@ -168,7 +181,6 @@
                 <h3>Panel Option ...</h3>
             </div>
         </div>
-    </div>
-</body>
-
+    </div> 
+</body> 
 </html>
