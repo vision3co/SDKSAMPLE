@@ -269,10 +269,10 @@
                 <div style="padding: 20px;">
                     Pick Legs:
                     <input class="f-center"
-                        onclick="     global_model_status.leg = this.value; v3.main.changeMaterial('LEGS',this.value); "
+                        onclick="     global_model_status.leg = this.value;v3.main.groupVisibility('METALLEGS','WOODLEGS');  v3.main.changeMaterial('METALLEGS',this.value); "
                         value="CHROME" />
                     <input class="f-center"
-                        onclick="    global_model_status.leg = this.value; v3.main.changeMaterial('LEGS',this.value);  "
+                        onclick="    global_model_status.leg = this.value;v3.main.groupVisibility('WOODLEGS','METALLEGS'); v3.main.changeMaterial('WOODLEGS',this.value);  "
                         value="WOODEN" />
 
                 </div>
