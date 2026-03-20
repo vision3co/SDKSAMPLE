@@ -19,15 +19,15 @@ The V3 SDK is loaded via a CDN script. Add this to your HTML `<head>`:
 
 ```html
 <script
-  src="https://dev.view.visionthree.io/scripts/v3/bundle.min.js"
+  src="https://dev.admin.visionthree.io/scripts/v3/bundle.min.js"
   type="text/javascript"
 ></script>
 ```
 
 **Note:** There are different bundle URLs for different environments:
 
-- Development/Preview: `https://dev.view.visionthree.io/scripts/v3/bundle.min.js`
-- Admin/Backend: `https://dev.admin.visionthree.io/scripts/v3/bundle.min.js`
+- Staging: `https://dev.admin.visionthree.io/scripts/v3/bundle.min.js`
+- Production: `https://view.visionthree.io/scripts/v3/bundle.min.js`
 
 ---
 
