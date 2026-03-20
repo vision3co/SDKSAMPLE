@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Detail</title>
+    <script src="https://dev.view.visionthree.io/scripts/v3/bundle.min.js" type="text/javascript"> </script>
+    <style>
+        .f-center {
+            display: -webkit-box;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-align-content: center;
+            -ms-flex-line-pack: center;
+            align-content: center;
+            -webkit-box-pack: center;
+            -moz-box-pack: center;
+            -webkit-justify-content: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -moz-box-align: center;
+            -webkit-align-items: center;
+            -ms-flex-align: center;
+            align-items: center;
+        }
+
+        .f-center-st {
+            display: -webkit-box;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-align-content: stretch;
+            -ms-flex-line-pack: stretch;
+            align-content: stretch;
+            -webkit-box-pack: stretch;
+            -moz-box-pack: stretch;
+            -webkit-justify-content: stretch;
+            -ms-flex-pack: stretch;
+            justify-content: stretch;
+            -webkit-box-align: stretch;
+            -moz-box-align: stretch;
+            -webkit-align-items: stretch;
+            -ms-flex-align: stretch;
+            align-items: stretch;
+        }
+
+
+        .w-full {
+
+            width: 100%;
+
+        }
+
+        .popup {
+            border: solid 1px #555555;
+            border-radius: 5px;
+            background-color: #eeeeee;
+        }
+
+        .thumbnail {
+            border-radius: 5px !important;
+            overflow: hidden; 
+            margin: 10px;
+            background-color: #eeeeee;
+        }
+
+
+
+        .gray {
+            background-color: #b4b4b4;
+        }
+
+        .black {
+            background-color: #000000;
+        }
+
+        .light {
+            background-color: #efefef;
+        }
+
+        .white {
+            background-color: #ffffff;
+        }
+
+        .w-middle {
+            width: 100%;
+            max-width: 1360px;
+        }
+
+        .w-panel {
+            width: 30%;
+            max-width: 300px;
+        }
+
+        .h-full {
+            height: 100% !important;
+        }
+
+        .relative {
+            position: relative;
+        }
+
+        .absolute {
+            position: absolute;
+        }
+
+        body,
+        html {
+            padding: 0px;
+            margin: 0px;
+            min-height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Product Detail Page</h2>
+    <div class="w-full gray f-center  h-full">
+
+        <div class="w-middle f-center-st  h-full ">
+            <script>
+                var global_model_status = {
+                    model: 'Didsbury Bed',
+                    type: 'No_Storage',
+                    color: 'SILVER GREY',
+                    leg: 'BASELEGS',
+
+                };
+
+                var initElement = function () { 
+                    
+
+                } 
+
+            </script>
+            <div class="w-middle  light   ">
+                <div class="w-full">
+                    <v3-viewer id="v3id" setting="{
+                model:'Didsbury Bed_No_Storage', 
+                background:'#fcfcfc',  
+                 materials:{ 
+                    UPHOLSTERY :{code:'SILVER GREY' } ,
+                    BEDDING:{ code :'BASEBEDDING'} ,
+                    LEGS:{ code : 'BASELEGS'}  ,
+                    HEADBOARDBACK : { code:'BASE'} ,
+                    PLASTICPARTS : { code:'BASE'} },
+                pan:1000,
+                camera:{angle_x:65.57,angle_y:84,distance:2.5 }}" shadow="true" subdomain="simba" name="main"
+                        onready="initElement()" style="width: 100%; height: 600px;">
+                </div>
+                <div class="w-full ">
+                    <script>
+                        var par = document.currentScript.parentNode;
+
+                        /// data { model:'',type:''}
+                        function add_image(size, data) {
+                            var el = document.createElement('img');
+                            el.className = 'thumbnail';
+                            el.src = "https://vphoto.img.haze.tools/simba_" + data.model +
+                                "_" + data.type +
+                                "?zoom=" + data.zoom + "&output_size=" + size +
+                                "&size=1024x1024&background=fcfcfc&pan=0.x0.0x0.0" +
+                                "&angle_x=" + data.rotate_x + "&angle_y=" + data.rotate_y + "&distance=2.5" +
+                                "&materials=UPHOLSTERY:" + data.color + ",BEDDING:BASEBEDDING,LEGS:" + data.leg;
+
+                            par.appendChild(el);
+
+                        }
+
+
+
+                        global_model_status.update_thumbnail = function () {
+                            add_image('300x250', { model: 'Didsbury Bed', type: global_model_status.type, color: global_model_status.color, leg: global_model_status.leg, rotate_x: 50, rotate_y: 80, zoom: 1 });
+                            add_image('300x250', { model: 'Didsbury Bed', type: global_model_status.type, color: global_model_status.color, leg: global_model_status.leg, rotate_x: 0, rotate_y: 70, zoom: 1 });
+                            add_image('300x250', { model: 'Didsbury Bed', type: global_model_status.type, color: global_model_status.color, leg: global_model_status.leg, rotate_x: 90, rotate_y: 80, zoom: 1 });
+                            add_image('250x250', { model: 'Didsbury Bed', type: global_model_status.type, color: global_model_status.color, leg: global_model_status.leg, rotate_x: 50, rotate_y: 80, zoom: 2 });
+                        }
+
+                        global_model_status.update_thumbnail()
+
+                    </script>
+                </div>
+            </div>
+            <div class="relative w-panel h-full f-center ">
+
+                <div class="f-center">
+                     
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
