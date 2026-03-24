@@ -425,6 +425,7 @@ The leg selection demonstrates advanced usage by combining group visibility cont
 ```
 
 This pattern:
+
 1. Updates the application state
 2. Shows the appropriate leg group (metal or wood) while hiding the other
 3. Applies the material to the visible group
@@ -446,11 +447,14 @@ This pattern:
   />
 
   <!-- Preview viewer -->
-  <v3-image
-    name="VIEW1"
-    viewer="main"
-    style="width: 400px;height: 300px;"
-  ></v3-image>
+
+<v3-image
+name="VIEW1"
+viewer="main"
+style="width: 400px;height: 300px;"
+
+> </v3-image>
+
 </div>
 ```
 
@@ -595,6 +599,180 @@ v3.main.changeMaterial("METALLEGS", "CHROME");
 // Switch to wooden legs with wooden finish
 v3.main.groupVisibility("WOODLEGS", "METALLEGS");
 v3.main.changeMaterial("WOODLEGS", "WOODEN");
+```
+
+---
+
+## Loading Materials from V3 Admin Configurator
+
+### The `initElement()` Function
+
+The V3 SDK provides a way to dynamically load available materials directly from the V3 Admin Configurator instead of hardcoding them. This ensures your material options stay synchronized with the admin panel configuration.
+
+**Implementation Example:**
+
+```javascript
+var initElement = function () {
+  // Listen for the model ready event
+  document
+    .getElementById("v3id")
+    .addEventListener(v3.EVENT.READY_MODEL, async (e) => {
+      // Function to create a material button
+      function add_color_button(name, code) {
+        var el = document.createElement("input");
+        el.type = "button";
+        el.value = name;
+
+        el.onclick = function () {
+          v3.main.changeMaterial("UPHOLSTERY", code);
+          global_model_status.color = code;
+        };
+
+        document.getElementById("color_options").appendChild(el);
+      }
+
+      // Get materials from the V3 Admin Configurator for 'StepOne' group
+      var stepOneMaterials = v3.main.getGroupMaterials("StepOne");
+
+      console.log(stepOneMaterials);
+      // Returns array of material objects:
+      // [
+      //   { name: 'SILVER GREY', code: 'SILVER_GREY' },
+      //   { name: 'VELVET CHOCOLATE', code: 'VELVET_CHOCOLATE' },
+      //   ...
+      // ]
+
+      // Dynamically create buttons for each material
+      for (var i in stepOneMaterials) {
+        add_color_button(stepOneMaterials[i].name, stepOneMaterials[i].code);
+      }
+
+      // Optionally get all model configuration options
+      console.log(v3.main.getModelOptions());
+
+      // Example output:
+      // body: {group_name: 'UPHOLSTERY'}
+      // config: "setting"
+      // legs: {group_name: "LEGS"
+      // options: [ "METALLEGS","WOODLEGS"]
+      //     });
+    });
+};
+```
+
+**Usage in HTML:**
+
+```html
+<v3-viewer
+  id="v3id"
+  name="main"
+  subdomain="simba"
+  onready="initElement()"
+  setting="{...}"
+  style="width: 100%; height: 600px;"
+>
+</v3-viewer>
+
+<!-- Container for dynamically generated material buttons -->
+<div id="color_options"></div>
+```
+
+### Key Methods
+
+#### `v3.[name].getGroupMaterials(groupName)`
+
+Retrieves all available materials for a specific material group from the V3 Admin Configurator.
+
+**Parameters:**
+
+- `groupName` (string): The name of the material group (e.g., 'StepOne', 'StepTwo')
+
+**Returns:**
+Array of material objects with:
+
+- `name` (string): Display name of the material
+- `code` (string): Material code used with `changeMaterial()`
+
+**Example:**
+
+```javascript
+var materials = v3.main.getGroupMaterials("StepOne");
+// [
+//   { name: 'SILVER GREY', code: 'SILVER_GREY' },
+//   { name: 'VELVET CHOCOLATE', code: 'VELVET_CHOCOLATE' }
+// ]
+```
+
+---
+
+#### `v3.[name].getModelOptions()`
+
+Retrieves the complete configuration options for the current model.
+
+**Returns:**
+Object containing model configuration including available materials, groups, and settings.
+
+**Example:**
+
+```javascript
+var options = v3.main.getModelOptions();
+console.log(options);
+```
+
+### Event: `v3.EVENT.READY_MODEL`
+
+This event fires when the 3D model is fully loaded and ready for interaction.
+
+**Usage:**
+
+```javascript
+document
+  .getElementById("v3id")
+  .addEventListener(v3.EVENT.READY_MODEL, async (e) => {
+    // Model is now loaded and ready
+    // Safe to call getGroupMaterials(), getModelOptions(), etc.
+  });
+```
+
+**Why This Matters:**
+
+- Material data is only available after the model loads
+- Attempting to call `getGroupMaterials()` before this event will fail
+- Always wrap material loading logic inside this event listener
+
+### Benefits of Dynamic Material Loading
+
+1. **Automatic Synchronization**: Changes in the V3 Admin Configurator automatically reflect in your application
+2. **No Hardcoding**: No need to manually maintain material lists in your code
+3. **Flexibility**: Support for multiple material groups and configurations
+4. **Centralized Management**: Material options managed in one place (V3 Admin)
+5. **Future-Proof**: New materials added to the configurator appear automatically
+
+### Complete Workflow Example
+
+```javascript
+// 1. Define initialization function
+var initElement = function () {
+  document
+    .getElementById("v3id")
+    .addEventListener(v3.EVENT.READY_MODEL, async (e) => {
+      // 2. Get materials from configurator
+      var fabricMaterials = v3.main.getGroupMaterials("StepOne");
+      var legMaterials = v3.main.getGroupMaterials("StepTwo");
+
+      // 3. Create UI elements dynamically
+      fabricMaterials.forEach((material) => {
+        createMaterialButton(material.name, material.code, "UPHOLSTERY");
+      });
+
+      legMaterials.forEach((material) => {
+        createMaterialButton(material.name, material.code, "LEGS");
+      });
+    });
+};
+
+// 4. Attach to viewer via onready attribute
+// <v3-viewer onready="initElement()" ...>
 ```
 
 ---
