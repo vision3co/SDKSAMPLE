@@ -167,7 +167,51 @@
                     color: 'SILVER GREY',
                     leg: 'CHROME',
 
-                }; 
+                };
+
+
+
+                var initElement = function () {
+
+                  
+
+
+                    // after 3D load you can get Materials list or Model setting
+                    document.getElementById('v3id').addEventListener(v3.EVENT.READY_MODEL, async (e) => {
+
+                        
+
+                        function add_color_button(name, code) {
+                            var el = document.createElement('input');
+
+                            el.type = 'button';
+                            el.value = name;
+
+                            el.onclick = function () {
+                                v3.main.changeMaterial('UPHOLSTERY', code);
+                                global_model_status.color = code;
+                            }
+
+                            document.getElementById('color_options').appendChild(el);
+                        }
+
+                        var stepOneMaterials = v3.main.getGroupMaterials('StepOne');
+
+                        console.log(stepOneMaterials);
+
+                        for (var i in stepOneMaterials)
+                            add_color_button(stepOneMaterials[i].name, stepOneMaterials[i].code);
+
+
+                        // get Setting for Model
+
+                        console.log(v3.main.getModelOptions());
+
+
+                    });
+
+
+                }
 
 
             </script>
@@ -184,7 +228,7 @@
                     PLASTICPARTS : { code:'BASE'} },
                 pan:1000,
                 camera:{angle_x:65.57,angle_y:84,distance:2.5 }}" shadow="true" subdomain="simba" name="main"
-                        onready="initElement" style="width: 100%; height: 600px;">
+                        onready="initElement()" style="width: 100%; height: 600px;">
                 </div>
                 <div class="w-full ">
                     <script>
@@ -202,8 +246,9 @@
                                 "&materials=UPHOLSTERY:" + data.color + ",BEDDING:BASEBEDDING,LEGS:" + data.leg;
 
                             par.appendChild(el);
-
                         }
+
+
 
                         global_model_status.thumbnail_parent = par;
 
@@ -221,7 +266,6 @@
                             };
 
                             v3.main.setModel(model);
-
                             global_model_status.update_thumbnail();
 
                         }
@@ -286,31 +330,9 @@
         <div class="w-middle popup  f-center ">
             <div class="w-popuppanel   light   ">
                 <h2 class="w-full">Colors: </h2>
-                <input type="button" value='VELVET CHOCOLATE'
-                    onclick="v3.main.changeMaterial('UPHOLSTERY',this.value)" />
-                <input type="button" onclick=" v3.main.changeMaterial('UPHOLSTERY',this.value);  global_model_status.color = this.value; " value='SILVER FCRU' />
-                <input type="button" onclick=" v3.main.changeMaterial('UPHOLSTERY',this.value);  global_model_status.color = this.value;" value='SILVER GREY' />
-                <input type="button" onclick=" v3.main.changeMaterial('UPHOLSTERY',this.value);  global_model_status.color = this.value;" value='VELVET MOLE' />
-                <input type="button" onclick=" v3.main.changeMaterial('UPHOLSTERY',this.value);  global_model_status.color = this.value;" value='VELVETOXBOUD' />
-                <input type="button" onclick=" v3.main.changeMaterial('UPHOLSTERY',this.value);  global_model_status.color = this.value;" value='UKNOWN1' />
-                <input type="button" onclick=" v3.main.changeMaterial('UPHOLSTERY',this.value);  global_model_status.color = this.value;" value='VENICE CREAM' />
-                <input type="button" onclick=" v3.main.changeMaterial('UPHOLSTERY',this.value);  global_model_status.color = this.value;"
-                    value='VENICE ANTHRICITE' />
-                <input type="button" onclick=" v3.main.changeMaterial('UPHOLSTERY',this.value);  global_model_status.color = this.value;" value='VENICE DOVE' />
-                <input type="button" onclick=" v3.main.changeMaterial('UPHOLSTERY',this.value);  global_model_status.color = this.value;" value='VENICE TAUPE' />
-                <input type="button" onclick=" v3.main.changeMaterial('UPHOLSTERY',this.value);  global_model_status.color = this.value;"
-                    value='SOFTTOUCH NICHEL' />
-                <input type="button" onclick=" v3.main.changeMaterial('UPHOLSTERY',this.value);  global_model_status.color = this.value;"
-                    value='SOFTTOUCH MOCHA' />
-                <input type="button" onclick=" v3.main.changeMaterial('UPHOLSTERY',this.value);  global_model_status.color = this.value;"
-                    value='SOFTTOUCH STONE' />
-                <input type="button" onclick=" v3.main.changeMaterial('UPHOLSTERY',this.value);  global_model_status.color = this.value;" value='VELVET ARCHC' />
-                <input type="button" onclick=" v3.main.changeMaterial('UPHOLSTERY',this.value);  global_model_status.color = this.value;" value='VELVET EBCNY' />
-                <input type="button" onclick=" v3.main.changeMaterial('UPHOLSTERY',this.value);  global_model_status.color = this.value;" value='VELVET OUVE' />
-                <input type="button" onclick=" v3.main.changeMaterial('UPHOLSTERY',this.value);  global_model_status.color = this.value;"
-                    value='SOFTTOUCH ASPHALT' />
-                <input type="button" onclick=" v3.main.changeMaterial('UPHOLSTERY',this.value);  global_model_status.color = this.value;" value='REBBLE GREY' />
-                <input type="button" onclick=" v3.main.changeMaterial('UPHOLSTERY',this.value);  global_model_status.color = this.value;" value='VELVET EBCNY' />
+                <div id="color_options">
+
+                </div>
 
                 <hr />
                 <input class="f-center" onclick="document.getElementById('colorpopup').style.display = 'none';  
