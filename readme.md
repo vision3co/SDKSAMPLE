@@ -603,6 +603,57 @@ v3.main.changeMaterial("WOODLEGS", "WOODEN");
 
 ---
 
+#### `v3.[name].playAnimation(animationName, startFrame, endFrame)`
+
+Plays a 3D model animation between specified frames. This is useful for interactive features like opening drawers, doors, or showing product assembly.
+
+**Parameters:**
+
+- `animationName` (string): Name of the animation to play (e.g., "Open", "Close")
+- `startFrame` (number): Starting frame number of the animation
+- `endFrame` (number): Ending frame number of the animation
+
+**Example:**
+
+```javascript
+// Play "Open" animation from frame 0 to frame 100 (opening)
+v3.main.playAnimation("Open", 0, 100);
+
+// Play "Open" animation from frame 100 to frame 0 (closing/reversing)
+v3.main.playAnimation("Open", 100, 0);
+```
+
+**Common Use Cases:**
+
+```javascript
+// Open a drawer
+v3.main.playAnimation("DrawerOpen", 0, 60);
+
+// Close the drawer (reverse the animation)
+v3.main.playAnimation("DrawerOpen", 60, 0);
+
+// Show assembly sequence
+v3.main.playAnimation("Assembly", 0, 120);
+
+// Toggle animation based on state
+var isOpen = false;
+function toggleDrawer() {
+  if (isOpen) {
+    v3.main.playAnimation("Open", 100, 0); // Close
+  } else {
+    v3.main.playAnimation("Open", 0, 100); // Open
+  }
+  isOpen = !isOpen;
+}
+```
+
+**Notes:**
+- Animation names and frame ranges depend on the animations configured in the 3D model
+- Playing in reverse (high frame to low frame) creates the opposite effect
+- Useful for interactive product demonstrations and feature showcases
+
+---
+
 ## Loading Materials from V3 Admin Configurator
 
 ### The `initElement()` Function
