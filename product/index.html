@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Detail</title>
+    <style>
+        .f-center {
+            display: -webkit-box;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-align-content: center;
+            -ms-flex-line-pack: center;
+            align-content: center;
+            -webkit-box-pack: center;
+            -moz-box-pack: center;
+            -webkit-justify-content: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -moz-box-align: center;
+            -webkit-align-items: center;
+            -ms-flex-align: center;
+            align-items: center;
+        }
+
+        .f-center-st {
+            display: -webkit-box;
+            display: -moz-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-align-content: stretch;
+            -ms-flex-line-pack: stretch;
+            align-content: stretch;
+            -webkit-box-pack: stretch;
+            -moz-box-pack: stretch;
+            -webkit-justify-content: stretch;
+            -ms-flex-pack: stretch;
+            justify-content: stretch;
+            -webkit-box-align: stretch;
+            -moz-box-align: stretch;
+            -webkit-align-items: stretch;
+            -ms-flex-align: stretch;
+            align-items: stretch;
+        }
+
+        div {
+            overflow-x: hidden;
+        }
+
+
+        .w-full {
+
+            width: 100%;
+
+        }
+
+        .popup {
+            border: solid 1px #555555;
+            border-radius: 5px;
+            padding: 10px;
+            background-color: #eeeeee;
+        }
+
+        .thumbnail {
+            margin: 10px;
+            border-radius: 5px !important;
+            overflow: hidden;
+            background-color: #eeeeee;
+        }
+
+        .gray {
+            background-color: #b4b4b4;
+        }
+
+        .black {
+            background-color: #000000;
+        }
+
+        .light {
+            background-color: #efefef;
+        }
+
+        .white {
+            background-color: #ffffff;
+        }
+
+        .w-middle {
+            width: 100%;
+            max-width: 1360px;
+        }
+
+        .w-panel {
+            width: 40%;
+            max-width: 400px;
+        }
+
+        .h-full {
+            height: 100% !important;
+        }
+
+        .t-00 {
+            top: 100% !important;
+        }
+
+        .l-00 {
+            left: 100% !important;
+        }
+
+        .fixed {
+            position: fixed;
+        }
+
+        .relative {
+            position: relative;
+        }
+
+        .absolute {
+            position: absolute;
+        }
+
+
+
+
+
+        body,
+        html {
+            padding: 0px;
+            margin: 0px;
+            min-height: 100%;
+
+        }
+
+        *,
+        div {
+
+            font-family: "Roboto", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: 500;
+            font-style: normal;
+            font-variation-settings:
+                "wdth" 100;
+
+        }
+
+        pre {
+            margin: 3px;
+        }
+
+        pre,
+        code {
+            font-size: 9pt !important;
+            border-radius: 5px;
+
+        }
+    </style>
+
+    <script>
+        async function tryAction(th) {
+            window.eval('   async function local(){ ' + th.parentNode.querySelector('code').innerText + ' }; local();');
+        }
+    </script>
+
+    <link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-tomorrow.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+
+
+    <script src="https://dev.admin.visionthree.io/scripts/v3/bundle.min.js" type="text/javascript"> </script>
+</head>
+ 
+<body>
+
+    <div class="w-full   f-center  h-full">
+
+        <div class="w-middle f-center-st  h-full ">
+            <div class="w-middle">
+                <h2>Product Detail Page</h2>
+                <div class="w-full">
+                    <v3-viewer id="v3id" setting="{
+                model:'model2', 
+                background:'#fcfcfc',  
+                 materials:{ 
+                    'UPHLOSTREY' :{code:'WOOLSMOOTHHD' } ,
+                    'BUTTONS' :{code:'BUTTONMAT' } ,
+                    'INSIDE1' :{code:'MATIN' } ,
+                    'INSIDE2' :{code:'MATIN2' } , 
+                     
+                 },
+                pan:1000,
+                camera:{angle_x:65.57,angle_y:84 ,distance:1.5 }}" shadow="true" subdomain="bb" name="main"
+                        style="width: 100%; height: 800px;">
+                    </v3-viewer>
+                </div>
+                <div>
+
+                </div>
+            </div>
+            <div class="relative w-panel h-full "
+                style="margin-top: 50px;margin-left: 20px; max-height: 800px; overflow-y:scroll;overflow-x:hidden;">
+                <h3>Change Material : </h3>
+                <div>
+                    <pre><code class="language-js"> await v3.[V3 Viewer Name]
+     .changeMaterial( [part name], [Color Name]); </code></pre>
+                    <div>
+                        <pre><code class="language-js"> await v3.main.changeMaterial('UPHLOSTREY', 'LINENDENIM'); </code></pre>
+
+                        <input onclick="tryAction(this) " type="button" value="Try" />
+                        <input onclick="v3.main.changeMaterial('UPHLOSTREY', 'Wool Stripe'); " type="button"
+                            value="Mat 2" />
+                        <input onclick="v3.main.changeMaterial('UPHLOSTREY', 'Windowpane'); " type="button"
+                            value="Mat 3" />
+                        <input onclick="v3.main.changeMaterial('UPHLOSTREY', 'WOOLSMOOTHHD'); " type="button"
+                            value="Back" />
+                    </div>
+                </div>
+
+                <h3>Change Camera View : </h3>
+                <div>
+                    <pre><code class="language-js"> await v3.[V3 Viewer Name]
+     .setCameraView(  { angel_x , angel_y, distance ,  ... } ); </code></pre>
+                    <div>
+                        <pre><code class="language-js"> await v3.main.setCameraView({ angle_x:0  ,angle_y:  90   }); </code></pre>
+
+                        <input onclick="tryAction(this) " type="button" value="Try" />
+                    </div>
+                </div>
+
+                <h3>Change Camera zoom (fov) : </h3>
+                <div>
+
+                    <div>
+                        <pre><code class="language-js"> await v3.main.setCameraView({ zoom:  10   }); </code></pre>
+
+                        <input onclick="tryAction(this) " type="button" value="Try" />
+                        <input onclick="   v3.main.setCameraView({ zoom:  1   }); " type="button" value="Back" />
+                    </div>
+                </div>
+
+
+                <h3>Group Material Change : </h3>
+                <div>
+
+                    <pre><code class="language-js"> await v3.[V3 Viewer Name]
+     .groupMaterial({
+         GROUP1 : [MATERIAL SETTING], ...},
+         callback); </code></pre>
+
+                    <div>
+                        <pre><code class="language-js"> await v3.main.groupMaterial( {
+      BUTTONS : {code:'BUTTONMAT',color:'#AA8800'}
+    }); </code></pre>
+
+                        <input onclick="tryAction(this) " type="button" value="Try" />
+                        <input oninput="  v3.main.groupMaterial( {
+      BUTTONS : {code:'BUTTONMAT',color: this.value}
+    }); " type="color" value="Try" />
+                    </div>
+                </div>
+
+
+                <h3>Group Visibility : </h3>
+                <div>
+
+                    <pre><code class="language-js"> await v3.[V3 Viewer Name]
+     .groupVisibility("/** show group list A,B,.. ** /","/* hide group list   A,B,.. */",callback); </code></pre>
+
+                    <div>
+                        <pre><code class="language-js"> await v3.main.groupVisibility("BTN2","BUTTONS"); </code></pre>
+
+                        <input onclick="tryAction(this); v3.main.groupMaterial( {
+      BTN2 : {code:'BUTTONMAT',color: '#AAAAAA'}
+    }); " type="button" value="Try" />
+                        <input onclick="   v3.main.groupVisibility('BUTTONS','BTN2'); " type="button" value="Back" />
+                    </div>
+                </div>
+
+
+                <h3>Switch Viewer : </h3>
+                <div class=" w-full" style="min-width: 300px;">
+                    <pre>
+ <code class="language-js"> &lt;v3-image
+     name="View Name"
+     viewer="Main Viewer Name" &gt;
+ &lt;/v3-image&gt;
+                        
+  v3.[V3 Viewer Name].switchToViewer( [view name] );
+  v3.[V3 Viewer Name].switchToMain(); </code></pre>
+                    <div class=" w-full">
+                        <pre><code class="language-js"> v3.main.switchToViewer('VIEW1'); </code></pre>
+                        <div class=" h-full light w-full  ">
+                            <v3-image name="VIEW1" viewer="main" style="width:100%;height: 300px;">
+                            </v3-image>
+                        </div>
+                        <input onclick="tryAction(this) " type="button" value="Try" />
+                        <input onclick="v3.main.switchToMain() " type="button" value="Back" />
+                    </div>
+                </div>
+
+
+                <h3>Request Realistic Image : </h3>
+                <div class=" w-full" style="min-width: 300px;">
+                    <pre>
+ <code class="language-js"> 
+                        
+  v3.requestRealisticImage(v3.[V3 Viewer Name],callback);  </code></pre>
+                    <div class=" w-full">
+                        <pre><code class="language-js"> v3.requestRealisticImage(v3.main,
+      document.getElementById('promp').value,
+      function(url){document.getElementById('IMAGE_VIEW1').src = url;}); </code></pre>
+                        <div class=" h-full light w-full  ">
+                            <img id="IMAGE_VIEW1"   style="width:100%;min-height:200px;" /> 
+                        </div>
+                        <div>
+  <textarea id="promp">  Make Outdoor Natural enviroment with sunny day
+                            </textarea>
+                        </div>
+                        <input onclick="tryAction(this) " type="button" value="Try"  /> 
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>
