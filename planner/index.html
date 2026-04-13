@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet" />
+
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+
+    <link href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-tomorrow.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+
+    <script src="https://dev.view.visionthree.io/scripts/v3/bundle.min.js" type="text/javascript"> </script>
+    <!--  <script src="/planner/b_babylon.js"> </script>
+    <script src="/planner/c_helper.js"> </script>
+    <script src="/planner/d_extensions.js"> </script>
+    <script src="/planner/e_armour.js"> </script>
+    <script src="/planner/f_db.js"> </script>
+    <script src="/planner/p_post.js"> </script>
+    <script src="/planner/g_shadow.js"></script>
+    <script src="/planner/x_template.js?3"> </script> 
+    <script src="/planner/y_planner.js"> </script>
+    <script src="/planner/z_init.js"> </script>-->
+
+    <title>V3 - Planner</title>
+
+</head>
+
+<body style="background-color: rgb(255, 255, 255);">
+    <div id="container1">
+        <script>
+            function initElement() {
+
+                document.getElementById('v3id').addEventListener('changed', function (event) {
+
+                    console.log(event);
+                    document.getElementById('Sections').innerHTML = event.data.sections_code;
+                });
+
+            }
+        </script>
+
+        <div>
+            <v3-planner id="v3id" custom='{  
+                   
+                }' setting="{
+                model:'TRUMAN LARGE PLANNER', 
+                background:'#f4f4f4',   
+                materials:{'UPHOLSTERY':{code:'ROCDE' }},
+                pan:1000, 
+                camera:{angle_x:65.57,angle_y:84,distance:2.5 }}" onchanged="console.log(3)" shadow="true"
+                subdomain="andrewmartin" name="main" onready="initElement()" style="width: 1440px; height: 650px;">
+
+
+            </v3-planner>
+        </div>
+
+        <div style="padding-top: 50px;">
+            <h3>Change Material : </h3>
+            <div>
+                <pre><code class="language-js"> [V3-planner element].addEventListener('changed', ... ) </code></pre>
+                <div>
+                    <h1 id="Sections">
+                        ...
+                    </h1>
+
+                </div>
+            </div>
+
+            <h3>Change Material : </h3>
+            <div>
+                <pre><code class="language-js"> await v3.[V3 Viewer Name]
+     .changeSectionsMaterial( [Color Details]); </code></pre>
+                <div>
+                    <pre><code class="language-js"> await v3.main.changeSectionsMaterial({UPHOLSTERY:{code:'ROCAU'}}); </code></pre>
+
+                    <input onclick="  v3.main.changeSectionsMaterial({UPHOLSTERY:{code:'ROCAU'}}); " type="button"
+                        value="Try" />
+                    <input onclick="  v3.main.changeSectionsMaterial({UPHOLSTERY:{code:'ROCDE'}}); " type="button"
+                        value="Back" />
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+</body>
+
+</html>
