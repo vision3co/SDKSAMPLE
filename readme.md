@@ -9,6 +9,7 @@ This sample project demonstrates the core capabilities of the VisionThree V3 SDK
 - [Getting Started](#getting-started)
 - [Core Concepts](#core-concepts)
 - [Sample Files](#sample-files)
+- [Planner](#planner)
 - [API Reference](#api-reference)
 
 ---
@@ -483,6 +484,80 @@ The `<v3-image>` component creates a linked view of the main viewer:
 
 ---
 
+## Planner
+
+The planner sample is documented separately because it uses the `<v3-planner>` component and section-based material updates rather than the product-detail flow used by `<v3-viewer>`.
+
+### File
+
+- `planner/index.html`
+
+### Purpose
+
+- Demonstrates embedding the planner experience with `v3-planner`
+- Shows how to listen for planner changes and read returned section data
+- Shows how to update planner section materials programmatically
+
+### Basic Usage
+
+```html
+<v3-planner
+  id="v3id"
+  custom="{}"
+  setting="{
+    model:'TRUMAN LARGE PLANNER',
+    background:'#f4f4f4',
+    materials:{'UPHOLSTERY':{code:'ROCDE'}},
+    pan:1000,
+    camera:{angle_x:65.57,angle_y:84,distance:2.5}
+  }"
+  shadow="true"
+  subdomain="andrewmartin"
+  name="main"
+  onready="initElement()"
+  style="width: 1440px; height: 650px;"
+></v3-planner>
+```
+
+### Listening to Planner Changes
+
+The planner emits a `changed` event. In the sample, `event.data.sections_code` is read and rendered to the page.
+
+```javascript
+function initElement() {
+  document.getElementById("v3id").addEventListener("changed", function (event) {
+    console.log(event);
+    document.getElementById("Sections").innerHTML = event.data.sections_code;
+  });
+}
+```
+
+### Changing Section Materials
+
+Use `changeSectionsMaterial()` on the planner instance to update section materials:
+
+```javascript
+await v3.main.changeSectionsMaterial({
+  UPHOLSTERY: { code: "ROCAU" },
+});
+```
+
+You can switch back to the original value the same way:
+
+```javascript
+await v3.main.changeSectionsMaterial({
+  UPHOLSTERY: { code: "ROCDE" },
+});
+```
+
+### Planner Notes
+
+- Access the instance through `v3.main` (based on `name="main"`)
+- Keep planner-specific event handling inside `initElement()` (or your own setup function)
+- The `changed` event payload is useful for syncing UI state, summaries, or form data
+
+---
+
 ## API Reference
 
 ### Global Object: `v3`
@@ -648,6 +723,7 @@ function toggleDrawer() {
 ```
 
 **Notes:**
+
 - Animation names and frame ranges depend on the animations configured in the 3D model
 - Playing in reverse (high frame to low frame) creates the opposite effect
 - Useful for interactive product demonstrations and feature showcases
