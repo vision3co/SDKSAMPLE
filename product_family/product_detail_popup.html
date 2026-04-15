@@ -169,6 +169,116 @@
 
                 };
 
+                async function set_model_preserve_camera(model) {
+                    var runner = async function () {
+                        var viewer = v3.main;
+                        var v3_element = document.getElementById('v3id');
+                        if (!viewer || !v3_element) return;
+
+                        if (!set_model_preserve_camera._mark_user_input) {
+                            set_model_preserve_camera._mark_user_input = function () {
+                                set_model_preserve_camera._last_input_at = Date.now();
+                            };
+                        }
+
+                        if (!set_model_preserve_camera._input_bound) {
+                            v3_element.addEventListener('pointerdown', set_model_preserve_camera._mark_user_input);
+                            v3_element.addEventListener('mousedown', set_model_preserve_camera._mark_user_input);
+                            v3_element.addEventListener('touchstart', set_model_preserve_camera._mark_user_input, { passive: true });
+                            v3_element.addEventListener('wheel', set_model_preserve_camera._mark_user_input, { passive: true });
+                            set_model_preserve_camera._input_bound = true;
+                        }
+
+                        var cache = set_model_preserve_camera._cache || {
+                            alpha: undefined,
+                            beta: undefined,
+                            radius: undefined,
+                            target_x: 0,
+                            target_y: 0,
+                            target_z: 0
+                        };
+
+                        function apply(state) {
+                            if (!viewer || !viewer.camera || !state) return;
+
+                            if (typeof state.alpha === 'number') viewer.camera.alpha = state.alpha;
+                            if (typeof state.beta === 'number') viewer.camera.beta = state.beta;
+                            if (typeof state.radius === 'number') viewer.camera.radius = state.radius;
+
+                            if (viewer.camera.target) {
+                                if (typeof state.target_x === 'number') viewer.camera.target.x = state.target_x;
+                                if (typeof state.target_y === 'number') viewer.camera.target.y = state.target_y;
+                                if (typeof state.target_z === 'number') viewer.camera.target.z = state.target_z;
+                            }
+                        }
+
+                        var snapshot = Object.assign({}, cache);
+                        if (viewer && viewer.camera) {
+                            snapshot.alpha = viewer.camera.alpha;
+                            snapshot.beta = viewer.camera.beta;
+                            snapshot.radius = viewer.camera.radius;
+
+                            if (viewer.camera.target) {
+                                snapshot.target_x = viewer.camera.target.x;
+                                snapshot.target_y = viewer.camera.target.y;
+                                snapshot.target_z = viewer.camera.target.z;
+                            }
+                        }
+
+                        set_model_preserve_camera._cache = snapshot;
+
+                        function restore_camera() {
+                            apply(snapshot);
+                            v3_element.removeEventListener(v3.EVENT.READY_MODEL, restore_camera);
+                        }
+
+                        v3_element.addEventListener(v3.EVENT.READY_MODEL, restore_camera);
+                        await viewer.setModel(model);
+
+                        var lock_started_at = Date.now();
+                        function user_interrupted() {
+                            return (set_model_preserve_camera._last_input_at || 0) >= lock_started_at;
+                        }
+
+                        setTimeout(function () {
+                            if (user_interrupted()) return;
+                            apply(snapshot);
+                        }, 0);
+                        setTimeout(function () {
+                            if (user_interrupted()) return;
+                            apply(snapshot);
+                        }, 350);
+                        setTimeout(function () {
+                            if (user_interrupted()) return;
+                            apply(snapshot);
+                        }, 900);
+
+                        if (set_model_preserve_camera._lock_timer) {
+                            clearInterval(set_model_preserve_camera._lock_timer);
+                            set_model_preserve_camera._lock_timer = null;
+                        }
+
+                        var started_at = Date.now();
+                        set_model_preserve_camera._lock_timer = setInterval(function () {
+                            if (user_interrupted()) {
+                                clearInterval(set_model_preserve_camera._lock_timer);
+                                set_model_preserve_camera._lock_timer = null;
+                                return;
+                            }
+
+                            apply(snapshot);
+
+                            if (Date.now() - started_at > 2200) {
+                                clearInterval(set_model_preserve_camera._lock_timer);
+                                set_model_preserve_camera._lock_timer = null;
+                            }
+                        }, 100);
+                    };
+
+                    set_model_preserve_camera._queue = (set_model_preserve_camera._queue || Promise.resolve()).then(runner, runner);
+                    return set_model_preserve_camera._queue;
+                }
+
 
 
                 var initElement = function () {
@@ -263,7 +373,7 @@
                                 }
                             };
 
-                            v3.main.setModel(model);
+                            set_model_preserve_camera(model);
                             global_model_status.update_thumbnail();
 
                         }
