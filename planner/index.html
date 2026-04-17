@@ -73,15 +73,23 @@
         </div>
 
         <div style="padding-top: 50px;">
-            <h3>Change Material : </h3>
+            <h3>Change Sections Event : </h3>
             <div>
                 <pre><code class="language-js"> [V3-planner element].addEventListener('changed', ... ) </code></pre>
+
                 <div>
                     <h1 id="Sections">
                         ...
                     </h1>
-
                 </div>
+                <pre><code class="language-js"> 
+                    result : 
+                    {
+                        section: [Curr section details],
+                        sections : Array [All sections] ,
+                        sections_code : uniq sections code   
+                    }
+                </code></pre>
             </div>
 
             <h3>Change Material : </h3>
@@ -107,3 +115,38 @@
 </body>
 
 </html>
+
+Hey
+
+for Modular Design  
+
+I’d like to introduce the new V3 Planner element, which is designed to work in a similar way to the V3 Viewer.
+
+The planner is implemented as a custom element, following the same architecture and behavior pattern as the viewer. This means it can be easily integrated and accessed in a consistent way across the platform.
+
+Using the V3 Planner, you can create and manage events directly through the element. It provides structured event handling for section changes — whenever a section is added or removed, a corresponding change event is triggered. This allows us to track and respond to updates in a clean and predictable way.
+
+In addition, the planner supports material changes. Materials can be updated dynamically through the same element interface .
+
+code : https://github.com/vision3co/SDKSAMPLE/tree/main/planner
+link : https://v3-samples.web.app/planner
+
+Let me know if you’d like a quick walkthrough or examples.
+
+also for  Dimension Layers
+
+you must find the correct templates from 
+
+v3.[engin name].templates 
+v3.[engin name].showDimensions
+v3.[engin name].hideDimensions
+ 
+sample :
+  v3.gallery.templates['TRUMAN LARGE 3 SEATER#def']  : [product code]#def
+
+  v3.gallery.showDimensions(  v3.gallery.templates['TRUMAN LARGE 3 SEATER#def']  , {})
+  v3.gallery.hideDimensions(  v3.gallery.templates['TRUMAN LARGE 3 SEATER#def']  )
+
+
+Best regards,
+Nasimi
