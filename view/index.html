@@ -124,15 +124,11 @@
         }
 
 
-
-
-
         body,
         html {
             padding: 0px;
             margin: 0px;
             min-height: 100%;
-
         }
 
         *,
@@ -144,7 +140,6 @@
             font-style: normal;
             font-variation-settings:
                 "wdth" 100;
-
         }
 
         pre {
@@ -185,27 +180,27 @@
                 <script>
                     var initElement = function () {
 
-
-
                         // after 3D load you can get Materials list or Model setting
                         document.getElementById('v3id').addEventListener(v3.EVENT.READY_MODEL, async (e) => {
 
                             v3.main.onChangeEventStart = true;
 
-                            v3.main.onChange('camera.alpha', function (m, v) { console.log(v); document.getElementById('camera_alpha').value = v * rad; });
-                            v3.main.onChange('camera.beta', function (m, v) { console.log(v); document.getElementById('camera_beta').value = v * rad; });
-                            v3.main.onChange('camera.radius', function (m, v) { console.log(v); document.getElementById('camera_radius').value = v; });
-                            v3.main.onChange('camera.fov', function (m, v) { console.log(v); document.getElementById('camera_fov').value = v; });
-                            v3.main.onChange('camera.target.x', function (m, v) { console.log(v); document.getElementById('camera_tarx').value = v; });
-                            v3.main.onChange('camera.target.y', function (m, v) { console.log(v); document.getElementById('camera_tary').value = v; });
-                            v3.main.onChange('camera.target.z', function (m, v) { console.log(v); document.getElementById('camera_tarz').value = v; });
+                            v3.name_js = { name:'view1' };
+                            v3.views  = {};
 
-                           /* v3.main.groupMaterials({}, function (list) {
-                               
-                            }); */
+                            v3.main.onChange('camera.alpha', function (m, v) { v3.name_js.alpha = v * rad; document.getElementById('camera_alpha').value = v * rad; });
+                            v3.main.onChange('camera.beta', function (m, v) { v3.name_js.beta = v * rad; document.getElementById('camera_beta').value = v * rad; });
+                            v3.main.onChange('camera.radius', function (m, v) { v3.name_js.radius = v; document.getElementById('camera_radius').value = v; });
+                            v3.main.onChange('camera.fov', function (m, v) { v3.name_js.fov = v; document.getElementById('camera_fov').value = v; });
+                            v3.main.onChange('camera.target.x', function (m, v) { v3.name_js.tarx = v; document.getElementById('camera_tarx').value = v; });
+                            v3.main.onChange('camera.target.y', function (m, v) { v3.name_js.tary = v; document.getElementById('camera_tary').value = v; });
+                            v3.main.onChange('camera.target.z', function (m, v) { v3.name_js.tarz = v; document.getElementById('camera_tarz').value = v; });
 
-                           /* v3.main.loadTemplate({}); */ 
+                            /* v3.main.groupMaterials({}, function (list) {
+                                
+                             }); */
 
+                            /* v3.main.loadTemplate({}); */
                         });
                     }
                 </script>
@@ -225,7 +220,7 @@
                 pan:1000,
                 disable3dLoader:true,
                 camera:{angle_x:65.57,angle_y:84 ,distance:1.5 }}" shadow="true" subdomain="simba" name="main"
-                        onready="initElement()" style="width: 100%; height: 800px;">
+                        onready="initElement()" style="width: 800px; height: 800px;">
                     </v3-viewer>
                 </div>
                 <div>
@@ -235,6 +230,12 @@
             <div class="relative   w-panel h-full "
                 style="margin-top: 50px;margin-left: 20px; max-height: 800px; overflow-y:scroll;overflow-x:hidden; border: solid 1px #000000;border-radius: 5px;padding: 10px;">
                 <h3>Camera : </h3>
+
+                <div class=" w-panel ">
+                    <div class="fs-2">Name :</div>
+                    <input  class=" w-full" type="text"  
+                        onkeyup="if(event.keyCode=='13') { v3.name_js.name = value ;} " />
+                </div>
 
                 <div class=" w-panel ">
                     <div class="fs-2">Alpha :</div>
@@ -275,10 +276,13 @@
                     <div class="fs-2"> Target Z :</div>
                     <input class=" w-panel" type="number" id="camera_tarz"
                         onkeyup="if(event.keyCode=='13') v3.main.camera.target.z = this.value ; " />
-                </div>
-
-            </div>
-
+                </div> 
+                 <div>
+                    <div class="fs-2"> Add View</div>
+                    <input class=" w-panel" type="button"  
+                        onclick="v3.views[v3.name_js.name] = JSON.parse(JSON.stringify(v3.name_js));" />
+                </div> 
+            </div> 
         </div>
     </div>
 </body>
